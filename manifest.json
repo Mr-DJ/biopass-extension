@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+    "name": "KeyPass",
+    "version": "1.0",
+  
+    "description": "extension for biopass",
+    "icons": {
+      "48": ""
+    },
+  
+    "permissions": [
+      "activeTab"
+    ],
+  
+    "browser_action": {
+      "default_icon": "", 
+      "default_title": "",
+      "default_popup": "" 
+    },
+  
+    "web_accessible_resources": [
+      
+    ]
+  }
