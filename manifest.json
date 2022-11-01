@@ -18,7 +18,7 @@
         "service_worker":"back.js"
     },
     "action":{
-        "default_icon": "boo.png"
+        "default_icon": "img/boo.png"
         
     }
 
