@@ -1,24 +1,26 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "KeyPass",
     "version": "1.0",
   
     "description": "extension for biopass",
-    "icons": {
-      "48": ""
-    },
-  
-    "permissions": [
-      "activeTab"
+    
+   
+    "content_scripts":[
+      {
+        "matches":[
+          "<all_urls>"
+        ],
+        "js": ["sinlose.js"] 
+      }
     ],
-  
-    "browser_action": {
-      "default_icon": "", 
-      "default_title": "",
-      "default_popup": "" 
+    "background":{
+        "service_worker":"back.js"
     },
-  
-    "web_accessible_resources": [
-      
-    ]
+    "action":{
+        "default_icon": "img/boo.png"
+        
+    }
+
+    
   }
