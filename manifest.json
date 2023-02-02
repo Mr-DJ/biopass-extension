@@ -18,7 +18,8 @@
         "service_worker":"back.js"
     },
     "action":{
-        "default_icon": "img/boo.png"
+        "default_icon": "img/boo.png",
+        "default_popup":"poopup.html"
         
     }
 
