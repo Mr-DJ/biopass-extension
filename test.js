@@ -1,14 +1,16 @@
 // document.body.style.border = "10px solid red";
 console.log('Started');
-function getLoginFields() {
-    let inputs = document.getElementsByTagName('input');
-    let len = inputs.length;
 
-    if(len == 0) {
-        console.log('tjere is no form')
-        return;
-    }
-    console.log('tjere might be form')
+let inputs = document.getElementsByTagName("input");
+let len = inputs.length;
+
+if (len == 0) {
+  console.log("tjere is no form");
+}
+console.log("tjere might be form");
+
+
+function getLoginFields() {
 
     let pass = "", user = "";
 
@@ -27,5 +29,12 @@ function getLoginFields() {
         console.log("i knue ure user esdh esh this only -> " + user);
     }
 }
-// if(prompt('hello gays'))
-//     getLoginFields();
+
+let submitButton = document.querySelectorAll("input[type=submit]")[0]
+  ? document.querySelectorAll("input[type=submit]")[0]
+  : document.querySelectorAll("button[type=submit]")[0];
+
+// if (submitButton.click()) 
+//     console.log(" you touched me owo");
+
+submitButton.addEventListener('click', function(){ console.log("you touched me owo"); getLoginFields(); });

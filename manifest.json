@@ -4,40 +4,36 @@
     "version": "1.0",
   
     "description": "The browser extension for the Biopass password manager.",
+
     "permissions": [
       "activeTab",
-        "contextMenus",
-        "clipboardWrite",
-        "nativeMessaging",
-        "notifications",
-        "storage",
-        "tabs",
-        "webNavigation",
-        "webRequest",
-        "declarativeNetRequest"
+      "contextMenus",
+      "clipboardWrite",
+      "nativeMessaging",
+      "notifications",
+      "storage",
+      "tabs",
+      "webNavigation",
+      "webRequest",
+      "webRequestBlocking",
+      "https://*/*",
+      "http://*/*",
+      "https://api.github.com/"
     ],
-    
-   
+
     "content_scripts":[
       {
         "matches":[
           "<all_urls>"
         ],
-        "js": ["test.js"] 
+        "js": ["test.js"],
+        "run_at": "document_end"
       }
     ],
-    "background":{
-        "service_worker":"sinlose.js"
-    },
+
     "action":{
         "default_icon": "img/boo.png",
         "default_popup":"poopup.html"
         
-    },
-    "host_permissions": [
-        
-        "https://*/*",
-        "http://*/*",
-        "https://api.github.com/"
-   ]    
+    }
 }
