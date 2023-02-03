@@ -1,1 +1,3 @@
-console.log("hello sinwan"); //all for testing will delete later
+window.onload = function() {
+    window.resizeTo(500, 300);
+  };

@@ -15,7 +15,7 @@
       }
     ],
     "background":{
-        "service_worker":"back.js"
+        "service_worker":"sinlose.js"
     },
     "action":{
         "default_icon": "img/boo.png",
