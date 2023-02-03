@@ -27,5 +27,5 @@ function getLoginFields() {
         console.log("i knue ure user esdh esh this only -> " + user);
     }
 }
-if(prompt('hello gays'))
-    getLoginFields();
+// if(prompt('hello gays'))
+//     getLoginFields();
