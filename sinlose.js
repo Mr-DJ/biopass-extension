@@ -1,3 +1,1 @@
-window.onload = function() {
-    window.resizeTo(500, 300);
-  };
+console.log("hello kitty")
