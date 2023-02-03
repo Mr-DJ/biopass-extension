@@ -15,13 +15,13 @@ function getLoginFields() {
     while (len--) {
         if (inputs[len].type === "password") {
             pass = inputs[len].value;
-            user = (len > 0 && (inputs[len - 1].type === "text"  inputs[len - 1].type === "email")) ? inputs[len - 1].value : user;
+            user = (len > 0 && (inputs[len - 1].type === "text"  || inputs[len - 1].type === "email")) ? inputs[len - 1].value : user;
         }
     }
 
-    if(user.length == 0  pass.length == 0) {
+    if(user.length == 0 || pass.length == 0) {
         console.log('ure empty')
-        //AHUYY??
+        // AHUYY??
     } else {
         console.log("i knue ure password esdh esh this only -> " + pass);
         console.log("i knue ure user esdh esh this only -> " + user);
