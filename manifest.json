@@ -26,9 +26,9 @@
         "matches":[
           "<all_urls>"
         ],
-        "js": ["test.js"],
+        "js": ["content_scripts.js"]
         
-        "run_at": "document_end"
+       
       }
       
     ],
