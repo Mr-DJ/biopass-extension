@@ -15,7 +15,7 @@
       "tabs",
       "webNavigation",
       "webRequest",
-      "webRequestBlocking",
+      "declarativeNetRequest",
       "https://*/*",
       "http://*/*",
       "https://api.github.com/"
@@ -27,8 +27,10 @@
           "<all_urls>"
         ],
         "js": ["test.js"],
+        
         "run_at": "document_end"
       }
+      
     ],
 
     "action":{
