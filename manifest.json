@@ -26,11 +26,8 @@
         "matches":[
           "<all_urls>"
         ],
-        "js": ["content_scripts.js"]
-        
-       
-      }
-      
+        "js": ["content_scripts.js", "test.js"]       
+      }      
     ],
 
     "action":{
