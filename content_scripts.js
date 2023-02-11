@@ -60,11 +60,11 @@
         <form class="shrivardan">
             <div>
               <label for="username">Username:</label>
-              <input type="text" id="username" name="username">
+              <input type="text" id="username" name="username" class="shriv_inputs">
             </div>
             <div>
               <label for="password">Password:</label>
-              <input type="password" id="password" name="password">
+              <input type="password" id="password" name="password" class="shriv_inputs">
             </div>
             <div>
               <button type="submit">Save</button>

@@ -26,7 +26,9 @@ function getLoginFields() {
         // AHUYY??
     } else {
         console.log("password -> " + pass);
+        document.getElementsByClassName('shriv_inputs')[1].value = pass;
         console.log("user -> " + user);
+        document.getElementsByClassName('shriv_inputs')[0].value = user;
     }
 }
 
