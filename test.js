@@ -9,6 +9,16 @@ if (len == 0) {
 }
 console.log("there might be a form");
 
+function setCookie(name, value, maxAgeSeconds) {
+    var maxAgeSegment = "; max-age=" + maxAgeSeconds;
+    document.cookie = encodeURI(name) + "=" + encodeURI(value) + maxAgeSegment;
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
 
 function getLoginFields() {
 
@@ -27,9 +37,19 @@ function getLoginFields() {
     } else {
         console.log("password -> " + pass);
         document.getElementsByClassName('shriv_inputs')[1].value = pass;
+        setCookie('shriv_password', pass, 30);
         console.log("user -> " + user);
         document.getElementsByClassName('shriv_inputs')[0].value = user;
+        setCookie('shriv_username', user, 30);
+        setCookie("shriv_display", "block", 30);
     }
+}
+
+function embedStatus() {
+    if(getCookie('shriv_display') == "block") 
+        document.getElementsByClassName("shrivardan")[0].style.display = "block";
+    else
+        document.getElementsByClassName("shrivardan")[0].style.display = "none";
 }
 
 let submitButton = document.querySelectorAll("input[type=submit]")[0]
@@ -38,8 +58,9 @@ let submitButton = document.querySelectorAll("input[type=submit]")[0]
 
 
 submitButton.addEventListener('click', function() { 
-    console.log("clicked"); getLoginFields();
-    document.getElementsByClassName('shrivardan')[0].style.display = "block";
+    console.log("clicked"); 
+    getLoginFields();
+    embedStatus();
 });
 
 // console.log("Started");
