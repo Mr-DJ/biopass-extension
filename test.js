@@ -46,8 +46,13 @@ function getLoginFields() {
 }
 
 function embedStatus() {
-    if(getCookie('shriv_display') == "block") 
+    if(getCookie('shriv_display') == "block") {
         document.getElementsByClassName("shrivardan")[0].style.display = "block";
+        document.getElementsByClassName("shriv_inputs")[0].value =
+          getCookie("shriv_username");
+        document.getElementsByClassName("shriv_inputs")[1].value =
+          getCookie("shriv_password");
+    } 
     else
         document.getElementsByClassName("shrivardan")[0].style.display = "none";
 }
@@ -63,6 +68,9 @@ submitButton.addEventListener('click', function() {
     embedStatus();
 });
 
+window.onload = (event) => {
+    embedStatus();
+};
 // console.log("Started");
 
 // let inputs = document.getElementsByTagName("input");
