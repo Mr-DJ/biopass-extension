@@ -71,6 +71,8 @@ submitButton.addEventListener('click', function() {
 window.onload = (event) => {
     embedStatus();
 };
+
+
 // console.log("Started");
 
 // let inputs = document.getElementsByTagName("input");

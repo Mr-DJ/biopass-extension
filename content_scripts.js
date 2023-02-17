@@ -67,11 +67,14 @@
               <input type="password" id="password" name="password" class="shriv_inputs">
             </div>
             <div>
-              <button type="submit">Save</button>
-              <button type="reset">Cancel</button>
+              <button id="subb" type="submit">Save</button>
+              <button id="canc" type="reset">Cancel</button>
             </div>
           </form>
-          <script type="text/javascript" src="popup.js"></script>  
+          <script type="text/javascript" src="popup.js"></script>
+          
+          <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+          <script type="text/javascript" src="requests.js" defer></script>  
     </body>
     
 </html>`;
