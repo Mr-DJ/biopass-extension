@@ -67,3 +67,11 @@ const sex = function() {
   document.body.appendChild(injectElement);
 }
 sex();
+fetch('https://biopasssever-production.up.railway.app/biopass', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+    },
+})
+   .then(response => response.json())
+   .then(response => console.log(JSON.stringify(response)))
