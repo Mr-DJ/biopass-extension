@@ -62,8 +62,6 @@ const sex = function() {
           </div>
         </form>
         <script type="text/javascript" src="popup.js"></script>
-        <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-        <script type="text/javascript" src="requests.js" defer></script>  
       </body>
 </html>`;
   document.body.appendChild(injectElement);
