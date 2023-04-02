@@ -7,23 +7,20 @@
 //     //WRITE SEND BACKEND CODE HERE
 // });
 
-const clickShriv = function() {
-  let inputValue = document.getElementsByClassName('shriv_inputs')[1];
-  alert('You entered: ' + inputValue);
-  getWebsiteName();
-}
 
 
 
 console.log(document.querySelector("#subb"));
-document.querySelector('#subb').addEventListener('click', function(){ alert('The button was clicked!') });
+document.querySelector('#subb').addEventListener('click', function() { 
+  let inputValue = document.getElementsByClassName("shriv_inputs")[1].value;
+  alert("You entered: " + inputValue + " on website " + getWebsiteName());
+});
 
-// The button was clicked!
 // The button was clicked!
 
 
 const getWebsiteName = function() {
-  console.log(document.URL.replace(/.+\/\/|www.|\..+/g, ""));
+  return document.URL.replace(/.+\/\/|www.|\..+/g, "");
   // console.log(document.URL.replace(/.+\/\/|www.|\..+/g, ""));
 }
 

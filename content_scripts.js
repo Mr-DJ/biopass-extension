@@ -1,7 +1,3 @@
-//document.querySelector("u_0_s_y7").addEventListener("click", function() {
-    // Your logic goes here, for example:
-    //window.open("poopup.html", "extension_popup", "width=300,height=200");
-  //});
 const initiateExt = function() {
   const injectElement=document.createElement('div');
   injectElement.className = 'sauban';
