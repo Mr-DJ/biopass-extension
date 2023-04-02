@@ -2,7 +2,7 @@
     // Your logic goes here, for example:
     //window.open("poopup.html", "extension_popup", "width=300,height=200");
   //});
-const sex = function() {
+const initiateExt = function() {
   const injectElement=document.createElement('div');
   injectElement.className = 'sauban';
   // injectElement.innerHTML =
@@ -66,7 +66,7 @@ const sex = function() {
 </html>`;
   document.body.appendChild(injectElement);
 }
-sex();
+initiateExt();
 
 
 // fetch('https://biopasssever-production.up.railway.app/biopass', {
