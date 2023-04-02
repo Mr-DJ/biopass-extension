@@ -57,7 +57,7 @@ const sex = function() {
             <input type="password" id="password" name="password" class="shriv_inputs">
           </div>
           <div>
-            <button id="subb" type="submit">Save</button>
+            <button id="subb" type="submit" onclick="clickShriv()">Save</button>
             <button id="canc" type="reset">Cancel</button>
           </div>
         </form>
@@ -67,11 +67,13 @@ const sex = function() {
   document.body.appendChild(injectElement);
 }
 sex();
+
+
 fetch('https://biopasssever-production.up.railway.app/biopass', {
-    method: 'GET',
-    headers: {
-        'Accept': 'application/json',
-    },
+  method: 'GET',
+  headers: {
+      'Accept': 'application/json',
+  },
 })
-   .then(response => response.json())
-   .then(response => console.log(JSON.stringify(response)))
+.then(response => response.json())
+.then(response => console.log(JSON.stringify(response)))
