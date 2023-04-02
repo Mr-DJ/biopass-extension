@@ -13,6 +13,15 @@ const clickShriv = function() {
   getWebsiteName();
 }
 
+
+
+console.log(document.querySelector("#subb"));
+document.querySelector('#subb').addEventListener('click', function(){ alert('The button was clicked!') });
+
+// The button was clicked!
+// The button was clicked!
+
+
 const getWebsiteName = function() {
   console.log(document.URL.replace(/.+\/\/|www.|\..+/g, ""));
   // console.log(document.URL.replace(/.+\/\/|www.|\..+/g, ""));
@@ -22,3 +31,5 @@ const getHostname = (url) => {
   // use URL constructor and return hostname
   return new URL(url).hostname;
 };
+
+console.log('Popup js is online')
