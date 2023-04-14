@@ -84,10 +84,14 @@ window.onload = (event) => {
   embedStatus();
   getSubmitButton()
   console.log('ONload')
+
+
   // let x = 10 == 12 ? 200 : 100;
   // console.log(findSubmit())
   // console.log(document.querySelectorAll("button[type=submit]"));
 };
+
+
 
 
 // console.log("Started");
