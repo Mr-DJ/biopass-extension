@@ -65,6 +65,7 @@ function getSubmitButton() {
   submitButton.addEventListener('click', function() { 
     console.log("clicked"); 
     getLoginFields();
+    alert('ure a gay fag')
     embedStatus();
   });
 }
@@ -81,11 +82,11 @@ function findSubmit() {
 
 window.onload = (event) => {
   embedStatus();
-  // getSubmitButton()
+  getSubmitButton()
   console.log('ONload')
-  let x = 10 == 12 ? 200 : 100;
-  console.log(findSubmit())
-  console.log(document.querySelectorAll("button[type=submit]"));
+  // let x = 10 == 12 ? 200 : 100;
+  // console.log(findSubmit())
+  // console.log(document.querySelectorAll("button[type=submit]"));
 };
 
 
