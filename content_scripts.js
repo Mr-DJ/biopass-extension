@@ -65,11 +65,25 @@ const initiateExt = function() {
 initiateExt();
 
 
-// fetch('https://biopasssever-production.up.railway.app/biopass', {
-//   method: 'GET',
-//   headers: {
-//       'Accept': 'application/json',
-//   },
-// })
-// .then(response => response.json())
-// .then(response => console.log(JSON.stringify(response)))
+// async function postJSON(data) {
+//   try {
+//     const response = await fetch("https://biopasssever-production.up.railway.app/biopass/addWeb/", {
+//       method: "PUT", // or 'PUT'
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(data),
+//     });
+
+//     const result = await response.json();
+//     console.log("Success:", result);
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// }
+
+// const data = { 
+//   loginStatus : true ,
+// userName : "PGautam27",
+// password : "12345" };
+// postJSON(data);
