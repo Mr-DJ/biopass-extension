@@ -55,19 +55,37 @@ function embedStatus() {
     document.getElementsByClassName("shrivardan")[0].style.display = "none";
 }
 
-let submitButton = document.querySelectorAll("input[type=submit]")[0]
-  ? document.querySelectorAll("input[type=submit]")[0]
-  : document.querySelectorAll("button[type=submit]")[0];
+function getSubmitButton() {
+  console.log('inside onload')
+  let submitButton = document.querySelectorAll("input[type=submit]")[0] != undefined
+    ? document.querySelectorAll("input[type=submit]")[0]
+    : document.querySelectorAll("button[type=submit]")[0];
+  
+  
+  submitButton.addEventListener('click', function() { 
+    console.log("clicked"); 
+    getLoginFields();
+    embedStatus();
+  });
+}
+
+function findSubmit() {
+  return document.querySelectorAll("input[type=submit]")[0] != undefined
+    ? document.querySelectorAll("input[type=submit]")[0]
+    : document.querySelectorAll("button[type=submit]")[0];
+}
 
 
-submitButton.addEventListener('click', function() { 
-  console.log("clicked"); 
-  getLoginFields();
-  embedStatus();
-});
+
+
 
 window.onload = (event) => {
   embedStatus();
+  // getSubmitButton()
+  console.log('ONload')
+  let x = 10 == 12 ? 200 : 100;
+  console.log(findSubmit())
+  console.log(document.querySelectorAll("button[type=submit]"));
 };
 
 
