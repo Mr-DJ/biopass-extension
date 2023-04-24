@@ -14,9 +14,9 @@ console.log(document.querySelector("#subb"));
 document.querySelector('#subb').addEventListener('click', function() { 
   let password = document.getElementsByClassName("shriv_inputs")[1].value;
   let username = document.getElementsByClassName("shriv_inputs")[0].value;
-  alert("You entered: " + inputValue + " on website " + getWebsiteName());
+  alert("You entered: " + password + " on website " + getWebsiteName());
   const data = { 
-    loginStatus : true ,
+  loginStatus : true ,
   userName : username,
   password : password };
   postJSON(data);

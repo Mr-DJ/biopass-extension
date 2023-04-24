@@ -83,7 +83,7 @@ function findSubmit() {
 window.onload = (event) => {
   embedStatus();
   getSubmitButton()
-  console.log('ONload')
+  console.log('Onload')
 
 
   // let x = 10 == 12 ? 200 : 100;
