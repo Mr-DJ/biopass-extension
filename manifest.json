@@ -26,9 +26,13 @@
         "matches":[
           "<all_urls>"
         ],
-        "js": ["content_scripts.js", "test.js","popup.js"]       
+        "js": ["socketioclient.js","content_scripts.js", "test.js", "popup.js"]       
       }      
     ],
+    
+    "background": {
+      "service_workers": ["background.js"]
+    },
 
     "action":{
         "default_icon": "img/boo.png",
