@@ -65,11 +65,3 @@ const initiateExt = function() {
 initiateExt();
 
 
-// fetch('https://biopasssever-production.up.railway.app/biopass', {
-//   method: 'GET',
-//   headers: {
-//       'Accept': 'application/json',
-//   },
-// })
-// .then(response => response.json())
-// .then(response => console.log(JSON.stringify(response)))
