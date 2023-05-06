@@ -14,6 +14,7 @@ const initiateExt = function() {
             right: 10px;
             font-family: "Lucida Console", "Courier New", monospace;
             background-color: lightgrey;
+            display: none;
           }
           
           .shrivardan input {
