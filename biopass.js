@@ -82,15 +82,7 @@ function findSubmit() {
 //   console.log(result);
 // });
 
-window.onload = (event) => {
-  embedStatus();
-  getSubmitButton()
-  console.log('Onload')
-  
-  // let x = 10 == 12 ? 200 : 100;
-  // console.log(findSubmit())
-  // console.log(document.querySelectorAll("button[type=submit]"));
-};
+
 
 
 
@@ -209,3 +201,61 @@ fetch("https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b99
 .then(response => response.json())
 .then(response => {resp=response; console.log("Username:"+resp.website.username+ "\nPassword:"+resp.website.password)})
 console.log('Popup js is online')
+
+let firstTimeWebList = async () => {
+  if (getCookie("shriv_weblist") != null) {
+    console.log("already there bro");
+    return;
+  }
+  let res;
+  let data = [];
+  await fetch("https://biopasssever-production.up.railway.app/biopass/", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      res = response;
+      // console.log(res);
+      res.forEach((obj) => {
+        data.push({
+          id: obj._id,
+          url: obj.webSiteUrl,
+        });
+      });
+
+      var jsonData = JSON.stringify(data);
+      console.log(jsonData);
+      setCookie("shriv_weblist", jsonData, 3600);
+      console.log("first time triggered");
+    });
+};
+
+let inWeblist = async () => {
+  let jsonData = await decodeURIComponent(getCookie("shriv_weblist"));
+  // console.log(decodeURIComponent(getCookie("shriv_weblist")));
+  if (jsonData == null) return "Cookie does not exist";
+  console.log("in web list triggered");
+  // check if website is there in the cookie list
+  var currentUrl = window.location.host;
+  jsonData = await JSON.parse(jsonData);
+  // console.log(jsonData)
+  await jsonData.forEach((e) => {
+    if (e["url"] == currentUrl) return e["id"];
+    // alert(e["id"])
+    // console.log(e["url"]);
+  });
+  // if its not there then make an entry for it
+};
+
+window.onload = (event) => {
+  embedStatus();
+  getSubmitButton();
+  console.log("Onload");
+
+  // let x = 10 == 12 ? 200 : 100;
+  // console.log(findSubmit())
+  // console.log(document.querySelectorAll("button[type=submit]"));
+};
