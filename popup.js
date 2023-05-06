@@ -47,11 +47,19 @@ async function postJSON(data) {
 
     const result = await response.json();
     console.log("Success:", result);
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Error:", error);
   }
 }
+let resp;
 
-
-
-console.log('Popup js is online')
+fetch("https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b997305da", {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+    },
+})
+   .then(response => response.json())
+   .then(response => {resp=response; console.log("Username:"+resp.website.username+ "\nPassword:"+resp.website.password)})
+   console.log('Popup js is online')
