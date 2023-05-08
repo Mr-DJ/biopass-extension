@@ -9,18 +9,18 @@ if (len == 0) {
 }
 console.log("there might be a form");
 
-function setCookie(name, value, maxAgeSeconds) {
+const setCookie = (name, value, maxAgeSeconds) => {
   var maxAgeSegment = "; max-age=" + maxAgeSeconds;
   document.cookie = encodeURI(name) + "=" + encodeURI(value) + maxAgeSegment;
 }
 
-function getCookie(name) {
+const getCookie = (name) => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-function getLoginFields() {
+const getLoginFields = () => {
 
     let pass = "", user = "";
 
@@ -45,7 +45,7 @@ function getLoginFields() {
     }
 }
 
-function embedStatus() {
+const embedStatus = () => {
   if(getCookie('shriv_display') == "block") {
     document.getElementsByClassName("sauban")[0].style.display = "block";
     document.getElementsByClassName("shriv_inputs")[0].value = getCookie("shriv_username");
@@ -55,7 +55,7 @@ function embedStatus() {
     document.getElementsByClassName("sauban")[0].style.display = "none";
 }
 
-function getSubmitButton() {
+const getSubmitButton = () => {
   console.log('inside onload')
   let submitButton = document.querySelectorAll("input[type=submit]")[0] != undefined
     ? document.querySelectorAll("input[type=submit]")[0]
@@ -65,12 +65,12 @@ function getSubmitButton() {
   submitButton.addEventListener('click', function() { 
     console.log("clicked"); 
     getLoginFields();
-    alert('ure a gay fag')
+    // alert('ure a gay fag')
     embedStatus();
   });
 }
 
-function findSubmit() {
+const findSubmit = () => {
   return document.querySelectorAll("input[type=submit]")[0] != undefined
     ? document.querySelectorAll("input[type=submit]")[0]
     : document.querySelectorAll("button[type=submit]")[0];
@@ -173,7 +173,7 @@ const getHostname = (url) => {
   return new URL(url).hostname;
 };
 
-async function postJSON(data) {
+const postJSON = async (data) => {
   try {
     const response = await fetch("https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b997305da", {
       method: "PUT", // or 'PUT'
@@ -234,7 +234,7 @@ let firstTimeWebList = async () => {
 };
 
 let inWeblist = async () => {
-  let jsonData = await decodeURIComponent(getCookie("shriv_weblist"));
+  let jsonData = decodeURIComponent(getCookie("shriv_weblist"));
   // console.log(decodeURIComponent(getCookie("shriv_weblist")));
   if (jsonData == null) return "Cookie does not exist";
   console.log("in web list triggered");
