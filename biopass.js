@@ -72,6 +72,7 @@ const getLoginFields = () => {
       console.log("user -> " + user);
       document.getElementsByClassName('shriv_inputs')[0].value = user;
       setCookie('shriv_username', user, 30);
+      console.log("Setting block");
       setCookie("shriv_display", "block", 30);
     }
 }
@@ -82,8 +83,10 @@ const embedStatus = () => {
     document.getElementsByClassName("shriv_inputs")[0].value = getCookie("shriv_username");
     document.getElementsByClassName("shriv_inputs")[1].value = getCookie("shriv_password");
   }
-  else
+  else {
+    console.log("Clearing display")
     document.getElementsByClassName("sauban")[0].style.display = "none";
+  }
 }
 
 const getSubmitButton = () => {
@@ -101,10 +104,64 @@ const getSubmitButton = () => {
   });
 }
 
+const newFindSubmit = () => {
+  let re = /(Log\s*in|Sign\s*up|Sign\s*in|Register)/gim;
+  let possibleSubmits = document.querySelectorAll("input,button");
+  let submitButton;
+
+  for (var i = 0; i < possibleSubmits.length; i++) {
+    console.log(possibleSubmits[i]);
+    if (re.test(possibleSubmits[i].textContent.trim())) {
+      submitButton = possibleSubmits[i];
+      break;
+    }
+  }
+  console.log(submitButton);
+  if(submitButton) {
+    submitButton.addEventListener("click", () => {
+      console.log("clicked");
+      getLoginFields();
+      // alert('ure a gay fag')
+      embedStatus();
+    });
+  }
+};
+
 const findSubmit = () => {
   return document.querySelectorAll("input[type=submit]")[0] != undefined
     ? document.querySelectorAll("input[type=submit]")[0]
     : document.querySelectorAll("button[type=submit]")[0];
+}
+const filldetails = async() => {
+  let pass, user;
+
+  while (len--) {
+    if (inputs[len].type === "password") {
+        pass = inputs[len].value;
+        user = (len > 0 && (inputs[len - 1].type === "text"  || inputs[len - 1].type === "email")) ? inputs[len - 1].value : user;
+    }
+  }
+  console.log(user);
+  console.log(pass);
+
+  let response = await fetch("https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b997305da", {
+      method: 'GET',
+      headers: {
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+      },
+  })
+
+  let parsedData = JSON.parse(response); 
+  
+  console.log(parsedData);
+
+  console.log("Username:"+ parsedData.website.username + "\nPassword:"+ parsedData.website.password);
+  if(user && pass) {
+    user.value = parsedData.website.username;
+    pass.value = parsedData.website.password;
+  }
 }
 
 
@@ -187,6 +244,7 @@ document.querySelector('#subb').addEventListener('click', function() {
   userName : username,
   password : password };
   postJSON(data);
+  console.log("Setting block");
   setCookie("shriv_display", "", 30);
   embedStatus();
 });
@@ -241,16 +299,7 @@ const postJSON = async (data) => {
     }
   }
 }
-let resp;
 
-fetch("https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b997305da", {
-    method: 'GET',
-    headers: {
-        'Accept': 'application/json',
-    },
-})
-.then(response => response.json())
-.then(response => {resp=response; console.log("Username:"+resp.website.username+ "\nPassword:"+resp.website.password)})
 console.log('Popup js is online')
 
 const firstTimeWebList = async () => {
@@ -332,8 +381,10 @@ let inWeblist = () => {
 
 window.onload = (event) => {
   embedStatus();
-  getSubmitButton();
+  // getSubmitButton();
+  newFindSubmit();  
   firstTimeWebList();
+  //filldetails();
   console.log("Onload");
 
   // let x = 10 == 12 ? 200 : 100;
