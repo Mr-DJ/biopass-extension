@@ -14,10 +14,41 @@ const setCookie = (name, value, maxAgeSeconds) => {
   document.cookie = encodeURI(name) + "=" + encodeURI(value) + maxAgeSegment;
 }
 
-const getCookie = (name) => {
+const getCookie = (name) => { 
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+const setLocalWithExpiry = (key, value, ttl) => {
+  const now = new Date();
+
+  // `item` is an object which contains the original value
+  // as well as the time when it's supposed to expire
+  const item = {
+    value: value,
+    expiry: now.getTime() + (ttl * 1000),
+  };
+  localStorage.setItem(key, JSON.stringify(item));
+}
+
+
+const getLocalWithExpiry = (key) => {
+  const itemStr = localStorage.getItem(key);
+  // if the item doesn't exist, return null
+  if (!itemStr) {
+    return null;
+  }
+  const item = JSON.parse(itemStr);
+  const now = new Date();
+  // compare the expiry time of the item with the current time
+  if (now.getTime() > item.expiry) {
+    // If the item is expired, delete the item from storage
+    // and return null
+    localStorage.removeItem(key);
+    return null;
+  }
+  return item.value;
 }
 
 const getLoginFields = () => {
@@ -168,26 +199,46 @@ const getWebsiteName = function() {
   // console.log(document.URL.replace(/.+\/\/|www.|\..+/g, ""));
 }
 
-const getHostname = (url) => {
+const getHostname = () => {
   // use URL constructor and return hostname
-  return new URL(url).hostname;
+  return window.location.host;
 };
 
 const postJSON = async (data) => {
-  try {
-    const response = await fetch("https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b997305da", {
-      method: "PUT", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+  let webID = inWeblist();
+  if(webID != false) {
+    try {
+      let uri = "https://biopasssever-production.up.railway.app/biopass/" + webID;
+      // alert(uri);
+      const response = await fetch(uri, {
+        method: "PUT", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = response.json();
+      console.log("Success:", result);
+    }catch (error) {
+      console.error("Error:", error);
+    }
+  } else {
+    //do a first time put request and update the cookie as well
+    try {
+      let uri = "https://biopasssever-production.up.railway.app/biopass/addWeb/";
+      let newdata = { ...data, websiteName: getWebsiteName(), webSiteUrl: getHostname() };
 
-    const result = await response.json();
-    console.log("Success:", result);
-  } 
-  catch (error) {
-    console.error("Error:", error);
+      const response = await fetch(uri, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newdata),
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
 let resp;
@@ -202,57 +253,87 @@ fetch("https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b99
 .then(response => {resp=response; console.log("Username:"+resp.website.username+ "\nPassword:"+resp.website.password)})
 console.log('Popup js is online')
 
-let firstTimeWebList = async () => {
-  if (getCookie("shriv_weblist") != null) {
+const firstTimeWebList = async () => {
+  let cookie = getLocalWithExpiry("shriv_weblist");
+  if (cookie === undefined) {
+    console.log("Cookie doesnt exist");
+    return;
+  } 
+  if (cookie != null) {
     console.log("already there bro");
     return;
   }
-  let res;
+
   let data = [];
-  await fetch("https://biopasssever-production.up.railway.app/biopass/", {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((response) => {
-      res = response;
-      // console.log(res);
-      res.forEach((obj) => {
-        data.push({
-          id: obj._id,
-          url: obj.webSiteUrl,
-        });
-      });
+  let response = await fetch(
+    "https://biopasssever-production.up.railway.app/biopass/",
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  );
 
-      var jsonData = JSON.stringify(data);
-      console.log(jsonData);
-      setCookie("shriv_weblist", jsonData, 3600);
-      console.log("first time triggered");
+  let resdata = await response.json();
+  // console.log(res);
+  resdata.forEach((obj) => {
+    data.push({
+      id: obj._id,
+      url: obj.webSiteUrl,
     });
+  });
+
+  var jsonData = JSON.stringify(data);
+  console.log(jsonData);
+  setLocalWithExpiry("shriv_weblist", jsonData, 3600);
+  console.log("first time triggered");
+  
+  // .then((response) => {
+  //   res = response;
+  //   // console.log(res);
+  //   res.forEach((obj) => {
+  //     data.push({
+  //       id: obj._id,
+  //       url: obj.webSiteUrl,
+  //     });
+  //   });
+
+  //   var jsonData = JSON.stringify(data);
+  //   console.log(jsonData);
+  //   setCookie("shriv_weblist", jsonData, 3600);
+  //   console.log("first time triggered");
+  // });
 };
 
-let inWeblist = async () => {
-  let jsonData = decodeURIComponent(getCookie("shriv_weblist"));
-  // console.log(decodeURIComponent(getCookie("shriv_weblist")));
-  if (jsonData == null) return "Cookie does not exist";
+let inWeblist = () => {
+  let cookie = getLocalWithExpiry("shriv_weblist");
+  if(cookie === undefined) { 
+    console.log("Cookie not found");
+    return false;
+  }
+  let jsonData = decodeURIComponent(cookie);
+  if (jsonData === null) {
+    console.log("Cookie empty");
+    return false;
+  }
   console.log("in web list triggered");
+  
   // check if website is there in the cookie list
-  var currentUrl = window.location.host;
-  jsonData = await JSON.parse(jsonData);
-  // console.log(jsonData)
-  await jsonData.forEach((e) => {
-    if (e["url"] == currentUrl) return e["id"];
-    // alert(e["id"])
-    // console.log(e["url"]);
-  });
-  // if its not there then make an entry for it
+  var currentUrl = getHostname();
+  try {
+    let parsedData = JSON.parse(jsonData);
+    // console.log(jsonData)
+    return parsedData.find((entry) => entry.url === currentUrl)?.id;
+  } catch(e) { return false; } 
 };
+
+// console.log(inWeblist());
 
 window.onload = (event) => {
   embedStatus();
   getSubmitButton();
+  firstTimeWebList();
   console.log("Onload");
 
   // let x = 10 == 12 ? 200 : 100;
