@@ -136,6 +136,12 @@ const findSubmit = () => {
 
 const filldetails = async() => {
   let pass, user;
+  let webID = inWeblist();
+
+  if(!webID) {
+    console.log("Can't autofill, first time there are no details saved on server");
+    return;
+  }
 
   while (len--) {
     if (inputs[len].type === "password") {
@@ -146,8 +152,9 @@ const filldetails = async() => {
   console.log(user);
   console.log(pass);
 
+
   let response = await fetch(
-    "https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b997305da",
+    `https://biopasssever-production.up.railway.app/biopass/${webID}`,
     {
       method: "GET",
       headers: {
