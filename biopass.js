@@ -388,6 +388,21 @@ let inWeblist = () => {
   } catch(e) { return false; } 
 };
 
+const socketsfunc=()=>
+{
+// Establish a WebSocket connection
+const socket = io("https://biopasssever-production.up.railway.app/biopass/");
+
+// Here you need to emit when you revisit the website and you want to use the credential from server. In data put the website name that you want to authenticate
+socket.emit("authenticate", getHostname);
+
+//Here listen to the result and the data you'll recieve is success.
+socket.on("authResult", (data) => {
+  console.log(data);
+  //if it's success then do the necessary credential call
+});
+}
+
 // console.log(inWeblist());
 
 window.onload = (event) => {
@@ -395,6 +410,7 @@ window.onload = (event) => {
   // getSubmitButton();
   firstTimeWebList();
   filldetails();
+  socketsfunc();
   console.log("Executing onload");
 };
 
