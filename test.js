@@ -1,6 +1,6 @@
 const socketsfunc=()=>
 {
-const socket = io("https://biopasssever-production.up.railway.app/biopass/");
+const socket = io("https://biopasssever-production.up.railway.app/");
 
 // Handle events from the server
 socket.on("checkSocket", (data) => {
@@ -8,12 +8,20 @@ socket.on("checkSocket", (data) => {
 });
 
 // Send a message to the server
-socket.emit("authenticate", "Hello from extension!");
+socket.emit("authenticate", "facebook");
 
 socket.on("authenticate", (data) => {
   console.log("Received message:", data);
 });
+
+socket.on("authResult", (data) => {
+  console.log(data);
+});
 }
+
+
+
+
 
 window.onload = (event) => {
   socketsfunc();
