@@ -27,7 +27,7 @@
         "matches":[
           "<all_urls>"
         ],
-        "js": ["socketioclient.js","content_scripts.js", "biopass.js", "test.js"]       
+        "js": ["socketioclient.js","content_scripts.js","biopass.js"]       
       }      
     ],
     

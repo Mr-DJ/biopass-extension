@@ -66,7 +66,7 @@ const initiateExt = () => {
           <input type="password" id="password" name="password" class="shriv_inputs">
         </div>
         <div class="inline">
-          <button id="subb" type="submit"">Save</button>
+          <button id="subb" type="submit">Save</button>
           <button id="canc" type="reset">Cancel</button>
         </div>
       </form>

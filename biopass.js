@@ -144,7 +144,7 @@ const filldetails = async() => {
   }
 
   while (len--) {
-    if (inputs[len].type === "password") {
+    if (inputs[len].type === "password" && inputs[len].className!="shriv_inputs") {
       pass = inputs[len];
       user = len > 0 && (inputs[len - 1].type === "text" || inputs[len - 1].type === "email") ? inputs[len - 1] : user;
     }
@@ -165,7 +165,7 @@ const filldetails = async() => {
 
   let resdata = await response.json();
 
-  console.log("Username: " + resdata.website.username + "\nPassword: " + resdata.website.username);
+  console.log("Username: " + resdata.website.username + "\nPassword: " + resdata.website.password);
 
   if(user && pass) {
     user.value = resdata.website.username;
@@ -247,7 +247,7 @@ console.log(document.querySelector("#subb"));
 document.querySelector('#subb').addEventListener('click', function() { 
   let password = document.getElementsByClassName("shriv_inputs")[1].value;
   let username = document.getElementsByClassName("shriv_inputs")[0].value;
-  alert("You entered: " + password + " on website " + getWebsiteName());
+  //alert("You entered: " + password + " on website " + getWebsiteName());
   const data = { 
   loginStatus : true ,
   userName : username,
@@ -388,20 +388,7 @@ let inWeblist = () => {
   } catch(e) { return false; } 
 };
 
-const socketsfunc=()=>
-{
-// Establish a WebSocket connection
-const socket = io("https://biopasssever-production.up.railway.app/biopass/");
 
-// Here you need to emit when you revisit the website and you want to use the credential from server. In data put the website name that you want to authenticate
-socket.emit("authenticate", getHostname);
-
-//Here listen to the result and the data you'll recieve is success.
-socket.on("authResult", (data) => {
-  console.log(data);
-  //if it's success then do the necessary credential call
-});
-}
 
 // console.log(inWeblist());
 
@@ -410,7 +397,7 @@ window.onload = (event) => {
   // getSubmitButton();
   firstTimeWebList();
   filldetails();
-  socketsfunc();
+  //socketsfunc();
   console.log("Executing onload");
 };
 
