@@ -89,10 +89,15 @@ const getSubmitButton = () => {
   let re = /(Log\s*in|Sign\s*up|Sign\s*in|Register)/gim;
   let possibleSubmits = document.querySelectorAll("input,button");
   let submitButton = (document.querySelectorAll("input[type=submit]")[0] || document.querySelectorAll("button[type=submit]")[0]);
-  
+
+  if(submitButton.id == "subb") {
+    submitButton = undefined;
+  }
+
   if(!submitButton) {
     for (var i = 0; i < possibleSubmits.length; i++) {
       // console.log(possibleSubmits[i]);
+      if(possibleSubmits[i].id == "subb") possibleSubmits[i].remove();
       console.log(possibleSubmits[i].textContent.trim());
       if (re.test(possibleSubmits[i].textContent.trim())) {
         submitButton = possibleSubmits[i];
@@ -105,7 +110,7 @@ const getSubmitButton = () => {
     submitButton.addEventListener("click", () => {
       console.log("clicked");
       getLoginFields();
-      alert('ure a gay fag')
+      // alert('ure a gay fag')
       embedStatus();
     });
   }
@@ -280,7 +285,8 @@ const postJSON = async (data) => {
     try {
       let uri = "https://biopasssever-production.up.railway.app/biopass/addWeb/";
       let newdata = { ...data, websiteName: getWebsiteName(), webSiteUrl: getHostname() };
-
+      console.log("Date sending is... ");
+      console.log(newdata);
       const response = await fetch(uri, {
         method: "POST", // or 'PUT'
         headers: {
@@ -288,6 +294,7 @@ const postJSON = async (data) => {
         },
         body: newdata,
       });
+
     } catch (e) {
       console.log(e);
     }
