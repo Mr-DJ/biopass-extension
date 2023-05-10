@@ -240,7 +240,7 @@ document.querySelector('#subb').addEventListener('click', function() {
   //alert("You entered: " + password + " on website " + getWebsiteName());
   const data = { 
   loginStatus : true ,
-  userName : username,
+  username : username,
   password : password };
   postJSON(data);
   console.log("Setting block");
@@ -263,6 +263,7 @@ const getHostname = () => {
 
 const postJSON = async (data) => {
   let webID = inWeblist();
+
   if(webID) {
     try {
       let uri = "https://biopasssever-production.up.railway.app/biopass/" + webID;
@@ -277,14 +278,14 @@ const postJSON = async (data) => {
   
       const result = response.json();
       console.log("Success:", result);
-    }catch (error) {
+    } catch (error) {
       console.error("Error:", error);
     }
   } else {
     //do a first time POST request and update the cookie as well
     try {
       let uri = "https://biopasssever-production.up.railway.app/biopass/addWeb/";
-      let newdata = { ...data, websiteName: getWebsiteName(), webSiteUrl: getHostname() };
+      let newdata = { ...data, websiteName: getWebsiteName(), websiteUrl: getHostname() };
       console.log("Date sending is... ");
       console.log(newdata);
       const response = await fetch(uri, {
@@ -292,11 +293,10 @@ const postJSON = async (data) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: newdata,
+        body: JSON.stringify(newdata),
       });
-
-    } catch (e) {
-      console.log(e);
+    } catch(e) {
+      console.error(e);
     }
   }
 }
