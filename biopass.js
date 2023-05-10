@@ -53,7 +53,7 @@ const getLocalWithExpiry = (key) => {
 
 const getLoginFields = () => {
 
-    let pass = "", user = "";
+    let pass, user;
 
     while (len--) {
       if (inputs[len].type === "password") {
@@ -110,7 +110,8 @@ const newFindSubmit = () => {
   let submitButton;
 
   for (var i = 0; i < possibleSubmits.length; i++) {
-    console.log(possibleSubmits[i]);
+    // console.log(possibleSubmits[i]);
+    console.log(possibleSubmits[i].textContent.trim());
     if (re.test(possibleSubmits[i].textContent.trim())) {
       submitButton = possibleSubmits[i];
       break;
@@ -132,35 +133,36 @@ const findSubmit = () => {
     ? document.querySelectorAll("input[type=submit]")[0]
     : document.querySelectorAll("button[type=submit]")[0];
 }
+
 const filldetails = async() => {
   let pass, user;
 
   while (len--) {
     if (inputs[len].type === "password") {
-        pass = inputs[len].value;
-        user = (len > 0 && (inputs[len - 1].type === "text"  || inputs[len - 1].type === "email")) ? inputs[len - 1].value : user;
+      pass = inputs[len];
+      user = len > 0 && (inputs[len - 1].type === "text" || inputs[len - 1].type === "email") ? inputs[len - 1] : user;
     }
   }
   console.log(user);
   console.log(pass);
 
-  let response = await fetch("https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b997305da", {
-      method: 'GET',
+  let response = await fetch(
+    "https://biopasssever-production.up.railway.app/biopass/63ef92a6f79d564b997305da",
+    {
+      method: "GET",
       headers: {
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+        Accept: "application/json",
       },
-  })
+    }
+  );
 
-  let parsedData = JSON.parse(response); 
-  
-  console.log(parsedData);
+  let resdata = await response.json();
 
-  console.log("Username:"+ parsedData.website.username + "\nPassword:"+ parsedData.website.password);
+  console.log("Username: " + resdata.website.username + "\nPassword: " + resdata.website.username);
+
   if(user && pass) {
-    user.value = parsedData.website.username;
-    pass.value = parsedData.website.password;
+    user.value = resdata.website.username;
+    pass.value = resdata.website.password;
   }
 }
 
@@ -325,7 +327,9 @@ const firstTimeWebList = async () => {
   );
 
   let resdata = await response.json();
-  // console.log(res);
+  
+  console.log(resdata);
+
   resdata.forEach((obj) => {
     data.push({
       id: obj._id,
@@ -382,12 +386,13 @@ let inWeblist = () => {
 window.onload = (event) => {
   embedStatus();
   // getSubmitButton();
-  newFindSubmit();  
   firstTimeWebList();
-  //filldetails();
-  console.log("Onload");
-
-  // let x = 10 == 12 ? 200 : 100;
-  // console.log(findSubmit())
-  // console.log(document.querySelectorAll("button[type=submit]"));
+  filldetails();
+  console.log("Executing onload");
 };
+
+
+window.addEventListener("load", () => {
+  newFindSubmit();
+  console.log("Executing fully loaded");
+}); // page fully loaded
