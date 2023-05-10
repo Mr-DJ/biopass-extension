@@ -1,13 +1,12 @@
-
 console.log('Started');
 
-let inputs = document.getElementsByTagName("input");
-let len = inputs.length;
+let inputs;
+let len;
 
-if (len == 0) {
-  console.log("there is no form");
-}
-console.log("there might be a form");
+// if (len == 0) {
+//   console.log("there is no form");
+// }
+// console.log("there might be a form");
 
 const setCookie = (name, value, maxAgeSeconds) => {
   var maxAgeSegment = "; max-age=" + maxAgeSeconds;
@@ -52,29 +51,30 @@ const getLocalWithExpiry = (key) => {
 }
 
 const getLoginFields = () => {
-
-    let pass, user;
-
-    while (len--) {
-      if (inputs[len].type === "password") {
-          pass = inputs[len].value;
-          user = (len > 0 && (inputs[len - 1].type === "text"  || inputs[len - 1].type === "email")) ? inputs[len - 1].value : user;
-      }
+  let pass, user;
+  while (len--) {
+    if (inputs[len].type === "password") {
+      pass = inputs[len].value;
+      user =
+        len > 0 &&
+        (inputs[len - 1].type === "text" || inputs[len - 1].type === "email")
+          ? inputs[len - 1].value
+          : user;
     }
-
-    if(user.length == 0 || pass.length == 0) {
-      console.log('ure empty')
-      // AHUYY??
-    } else {
-      console.log("password -> " + pass);
-      document.getElementsByClassName('shriv_inputs')[1].value = pass;
-      setCookie('shriv_password', pass, 30);
-      console.log("user -> " + user);
-      document.getElementsByClassName('shriv_inputs')[0].value = user;
-      setCookie('shriv_username', user, 30);
-      console.log("Setting block");
-      setCookie("shriv_display", "block", 30);
-    }
+  }
+  if (user.length == 0 || pass.length == 0) {
+    console.log("ure empty");
+    // AHUYY??
+  } else {
+    console.log("password -> " + pass);
+    document.getElementsByClassName("shriv_inputs")[1].value = pass;
+    setCookie("shriv_password", pass, 30);
+    console.log("user -> " + user);
+    document.getElementsByClassName("shriv_inputs")[0].value = user;
+    setCookie("shriv_username", user, 30);
+    console.log("Setting block");
+    setCookie("shriv_display", "block", 30);
+  }
 }
 
 const embedStatus = () => {
@@ -90,42 +90,31 @@ const embedStatus = () => {
 }
 
 const getSubmitButton = () => {
-  console.log('inside onload')
-  let submitButton = document.querySelectorAll("input[type=submit]")[0] != undefined
-    ? document.querySelectorAll("input[type=submit]")[0]
-    : document.querySelectorAll("button[type=submit]")[0];
-  
-  
-  submitButton.addEventListener('click', function() { 
-    console.log("clicked"); 
-    getLoginFields();
-    // alert('ure a gay fag')
-    embedStatus();
-  });
-}
-
-const newFindSubmit = () => {
   let re = /(Log\s*in|Sign\s*up|Sign\s*in|Register)/gim;
   let possibleSubmits = document.querySelectorAll("input,button");
-  let submitButton;
-
-  for (var i = 0; i < possibleSubmits.length; i++) {
-    // console.log(possibleSubmits[i]);
-    console.log(possibleSubmits[i].textContent.trim());
-    if (re.test(possibleSubmits[i].textContent.trim())) {
-      submitButton = possibleSubmits[i];
-      break;
+  let submitButton = (document.querySelectorAll("input[type=submit]")[0] || document.querySelectorAll("button[type=submit]")[0]);
+  
+  if(!submitButton) {
+    for (var i = 0; i < possibleSubmits.length; i++) {
+      // console.log(possibleSubmits[i]);
+      console.log(possibleSubmits[i].textContent.trim());
+      if (re.test(possibleSubmits[i].textContent.trim())) {
+        submitButton = possibleSubmits[i];
+        break;
+      }
     }
-  }
-  console.log(submitButton);
+  } 
+
   if(submitButton) {
     submitButton.addEventListener("click", () => {
       console.log("clicked");
       getLoginFields();
-      // alert('ure a gay fag')
+      alert('ure a gay fag')
       embedStatus();
     });
   }
+
+  console.log(submitButton);
 };
 
 const findSubmit = () => {
@@ -273,7 +262,7 @@ const getHostname = () => {
 
 const postJSON = async (data) => {
   let webID = inWeblist();
-  if(webID != false) {
+  if(webID) {
     try {
       let uri = "https://biopasssever-production.up.railway.app/biopass/" + webID;
       // alert(uri);
@@ -291,7 +280,7 @@ const postJSON = async (data) => {
       console.error("Error:", error);
     }
   } else {
-    //do a first time put request and update the cookie as well
+    //do a first time POST request and update the cookie as well
     try {
       let uri = "https://biopasssever-production.up.railway.app/biopass/addWeb/";
       let newdata = { ...data, websiteName: getWebsiteName(), webSiteUrl: getHostname() };
@@ -301,7 +290,7 @@ const postJSON = async (data) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newdata),
+        body: newdata,
       });
     } catch (e) {
       console.log(e);
@@ -393,16 +382,18 @@ let inWeblist = () => {
 // console.log(inWeblist());
 
 window.onload = (event) => {
-  embedStatus();
-  // getSubmitButton();
+  inputs = document.getElementsByTagName("input");
+  len = inputs.length;
+  getSubmitButton();
   firstTimeWebList();
-  filldetails();
+  // filldetails();
   //socketsfunc();
   console.log("Executing onload");
 };
 
 
-window.addEventListener("load", () => {
-  newFindSubmit();
-  console.log("Executing fully loaded");
-}); // page fully loaded
+// window.addEventListener("load", () => {
+//   getSubmitButton();
+//   console.log("Executing fully loaded");
+// }); 
+// page fully loaded
