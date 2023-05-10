@@ -55,11 +55,7 @@ const getLoginFields = () => {
   while (len--) {
     if (inputs[len].type === "password") {
       pass = inputs[len].value;
-      user =
-        len > 0 &&
-        (inputs[len - 1].type === "text" || inputs[len - 1].type === "email")
-          ? inputs[len - 1].value
-          : user;
+      user = len > 0 && (inputs[len - 1].type === "text" || inputs[len - 1].type === "email") ? inputs[len - 1].value : user;
     }
   }
   if (user.length == 0 || pass.length == 0) {
@@ -382,6 +378,7 @@ let inWeblist = () => {
 // console.log(inWeblist());
 
 window.onload = (event) => {
+  embedStatus();
   inputs = document.getElementsByTagName("input");
   len = inputs.length;
   getSubmitButton();
