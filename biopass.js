@@ -118,12 +118,6 @@ const getSubmitButton = () => {
   console.log(submitButton);
 };
 
-const findSubmit = () => {
-  return document.querySelectorAll("input[type=submit]")[0] != undefined
-    ? document.querySelectorAll("input[type=submit]")[0]
-    : document.querySelectorAll("button[type=submit]")[0];
-}
-
 const filldetails = async() => {
   let pass, user;
   let webID = inWeblist();
