@@ -15,12 +15,13 @@
       "tabs",
       "webNavigation",
       "webRequest",
-      "declarativeNetRequest",
-      "https://*/*",
-      "http://*/*",
-      "https://api.github.com/"
+      "declarativeNetRequest"      
     ],
-
+    "host_permissions": [
+        "https://*/*",
+        "http://*/*",
+        "https://api.github.com/"
+    ],
     "content_scripts":[
       {
         "matches":[
