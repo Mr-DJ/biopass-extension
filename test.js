@@ -18,10 +18,6 @@ const socketApprove = () => {
   });
 }
 
-
-
-
-
 window.onload = (event) => {
   socketApprove();
 }

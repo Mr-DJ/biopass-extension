@@ -111,12 +111,20 @@ const getSubmitButton = () => {
   } 
 
   if(submitButton) {
-    submitButton.addEventListener("click", () => {
-      console.log("clicked");
-      getLoginFields();
-      // alert('ure a gay fag')
-      embedStatus();
-    });
+    firstTimeWebList();
+    let webID = inWeblist();
+    if(webID) { //second visit
+      //set new popup
+      //replace fake button
+      //call socket 
+    } else {
+      submitButton.addEventListener("click", () => { //first time
+        console.log("clicked");
+        getLoginFields();
+        // alert('ure a gay fag')
+        embedStatus();
+      });
+    }
   }
 
   console.log(submitButton);
@@ -308,6 +316,25 @@ let inWeblist = () => {
   } catch(e) { return false; } 
 };
 
+const socketApprove = () => {
+  const socket = io("https://biopasssever-production.up.railway.app/");
+
+  // Handle events from the server
+  socket.on("checkSocket", (data) => {
+    console.log(data);
+  });
+
+  // Send a message to the server
+  socket.emit("authenticate", getWebsiteName());
+
+  socket.on("authenticate", (data) => {
+    console.log("Received message:", data);
+  });
+
+  socket.on("authResult", (data) => {
+    console.log(data.success);
+  });
+};
 
 
 // console.log(inWeblist());
