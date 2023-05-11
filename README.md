@@ -17,6 +17,8 @@ Watch our demo video to see how Biopass makes password management easy, secure, 
 
 [![Biopass Authenticator Demo](https://img.youtube.com/vi/qtATUk52KyU/0.jpg)](https://www.youtube.com/watch?v=qtATUk52KyU)
 
+## Demo Link: https://youtu.be/qtATUk52KyU
+
 ### Instructions 
 To run this project locally: 
 
