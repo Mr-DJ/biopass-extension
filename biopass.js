@@ -190,8 +190,8 @@ const fillDetails = async() => {
   console.log("Username: " + resdata.website.username + "\nPassword: " + resdata.website.password);
 
   if(user && pass) {
-    user.value = resdata.website.username;
-    pass.value = resdata.website.password;
+    user.value = atob(resdata.website.username);
+    pass.value = atob(resdata.website.password);
   }
 }
 
@@ -216,8 +216,8 @@ document.querySelector('#subb').addEventListener('click', function() {
   //alert("You entered: " + password + " on website " + getWebsiteName());
   const data = { 
   loginStatus : true ,
-  username : username,
-  password : password };
+  username : btoa(username),
+  password : btoa(password) };
   postJSON(data);
   console.log("Setting block");
   setCookie("shriv_display", "", 30);
