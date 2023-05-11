@@ -1,8 +1,5 @@
 console.log('Started');
 
-let inputs;
-let len;
-
 // if (len == 0) {
 //   console.log("there is no form");
 // }
@@ -52,14 +49,25 @@ const getLocalWithExpiry = (key) => {
 
 const getLoginFields = () => {
   let pass, user;
+  let inputs = document.getElementsByTagName("input");
+  let len = inputs.length;
   while (len--) {
     if (inputs[len].type === "password") {
       pass = inputs[len].value;
       user = len > 0 && (inputs[len - 1].type === "text" || inputs[len - 1].type === "email") ? inputs[len - 1].value : user;
     }
   }
+
+  console.log(user);
+  console.log(pass);
+
+  if(user == undefined || pass == undefined) {
+    console.log("Unable to find the login fields");
+    return;
+  }
+
   if (user.length == 0 || pass.length == 0) {
-    console.log("ure empty");
+    console.log("One or more fields might be empty");
     // AHUYY??
   } else {
     console.log("password -> " + pass);
@@ -68,7 +76,6 @@ const getLoginFields = () => {
     console.log("user -> " + user);
     document.getElementsByClassName("shriv_inputs")[0].value = user;
     setCookie("shriv_username", user, 30);
-    console.log("Setting block");
     setCookie("shriv_display", "block", 30);
   }
 }
@@ -80,7 +87,7 @@ const embedStatus = () => {
     document.getElementsByClassName("shriv_inputs")[1].value = getCookie("shriv_password");
   }
   else {
-    console.log("Clearing display")
+    console.log("Clearing display");
     document.getElementsByClassName("sauban")[0].style.display = "none";
   }
 }
@@ -121,6 +128,8 @@ const getSubmitButton = () => {
 const filldetails = async() => {
   let pass, user;
   let webID = inWeblist();
+  let inputs = document.getElementsByTagName("input");
+  let len = inputs.length;
 
   if(!webID) {
     console.log("Can't autofill, first time there are no details saved on server");
@@ -282,7 +291,7 @@ const postJSON = async (data) => {
       let newdata = { ...data, websiteName: getWebsiteName(), websiteUrl: getHostname() };
       console.log("Date sending is... ");
       console.log(newdata);
-      const response = await fetch(uri, {
+      let response = await fetch(uri, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -303,10 +312,10 @@ const firstTimeWebList = async () => {
     console.log("Cookie doesnt exist");
     return;
   } 
-  if (cookie != null) {
-    console.log("already there bro");
-    return;
-  }
+  // if (cookie != null) {
+  //   console.log("already there bro");
+  //   return;
+  // }
 
   let data = [];
   let response = await fetch(
@@ -333,23 +342,7 @@ const firstTimeWebList = async () => {
   var jsonData = JSON.stringify(data);
   console.log(jsonData);
   setLocalWithExpiry("shriv_weblist", jsonData, 3600);
-  console.log("first time triggered");
-  
-  // .then((response) => {
-  //   res = response;
-  //   // console.log(res);
-  //   res.forEach((obj) => {
-  //     data.push({
-  //       id: obj._id,
-  //       url: obj.webSiteUrl,
-  //     });
-  //   });
-
-  //   var jsonData = JSON.stringify(data);
-  //   console.log(jsonData);
-  //   setCookie("shriv_weblist", jsonData, 3600);
-  //   console.log("first time triggered");
-  // });
+  console.log("Creating or updating weblist inside firstTimeWeblist");
 };
 
 let inWeblist = () => {
@@ -380,8 +373,6 @@ let inWeblist = () => {
 
 window.onload = (event) => {
   embedStatus();
-  inputs = document.getElementsByTagName("input");
-  len = inputs.length;
   getSubmitButton();
   firstTimeWebList();
   // filldetails();
