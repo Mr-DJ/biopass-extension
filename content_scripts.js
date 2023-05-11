@@ -20,6 +20,10 @@ const initiateExt = () => {
             
             display: none;
           }
+
+          .shrivardan {
+            display: none;
+          }
           
           .shrivardan input {
             border-radius: 0;

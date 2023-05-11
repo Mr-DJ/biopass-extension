@@ -78,11 +78,13 @@ const getLoginFields = () => {
 const embedStatus = () => {
   if(getCookie('shriv_display') == "block") {
     document.getElementsByClassName("sauban")[0].style.display = "block";
+    document.getElementsByClassName("shrivardan")[0].style.display = "block";
     document.getElementsByClassName("shriv_inputs")[0].value = getCookie("shriv_username");
     document.getElementsByClassName("shriv_inputs")[1].value = getCookie("shriv_password");
   }
   else {
     console.log("Clearing display");
+    document.getElementsByClassName("shrivardan")[0].style.display = "none";
     document.getElementsByClassName("sauban")[0].style.display = "none";
   }
 }
@@ -209,6 +211,7 @@ const postJSON = async (data) => {
     try {
       let uri = "https://biopasssever-production.up.railway.app/biopass/" + webID;
       // alert(uri);
+      console.log(data);
       const response = await fetch(uri, {
         method: "PUT", // or 'PUT'
         headers: {
@@ -273,7 +276,7 @@ const firstTimeWebList = async () => {
   resdata.forEach((obj) => {
     data.push({
       id: obj._id,
-      url: obj.webSiteUrl,
+      url: obj.websiteUrl,
     });
   });
 
