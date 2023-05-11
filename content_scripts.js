@@ -25,6 +25,28 @@ const initiateExt = () => {
             display: none;
           }
           
+          .socketpop {
+            background-color: yellow;
+            color: black;
+            animation: blinker 1.2s linear infinite;
+            display: none;
+          }
+
+          .socketpop p {
+            margin: 0;
+          }
+          
+          .errorpop {
+            background-color: red;
+            color: white;
+          }
+          
+          @keyframes blinker {
+            50% {
+              opacity: 0;
+            }
+          }
+
           .shrivardan input {
             border-radius: 0;
             padding: 5px;
@@ -56,6 +78,7 @@ const initiateExt = () => {
             display: inline;
           }
 
+
       </style>    
     </head>
           
@@ -74,7 +97,10 @@ const initiateExt = () => {
           <button id="canc" type="reset">Cancel</button>
         </div>
       </form>
-        <script type="text/javascript" src="biopass.js"></script>
+      <div class="socketpop">
+        <p>Check your mobile to authenticate!!!</p>
+      </div>
+      <script type="text/javascript" src="biopass.js"></script>
     </body>
 </html>`;
   document.body.appendChild(injectElement);

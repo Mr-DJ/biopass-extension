@@ -89,6 +89,17 @@ const embedStatus = () => {
   }
 }
 
+const socketPopOn = () => {
+  document.getElementsByClassName("sauban")[0].style.display = "block";
+  document.getElementsByClassName("socketpop")[0].style.display = "block";
+}
+
+const socketPopOff = () => {
+  console.log("Clearing socketpop");
+  document.getElementsByClassName("socketpop")[0].style.display = "none";
+  document.getElementsByClassName("sauban")[0].style.display = "none";
+}
+
 const getSubmitButton = () => {
   let re = /(Log\s*in|Sign\s*up|Sign\s*in|Register)/gim;
   let possibleSubmits = document.querySelectorAll("input,button");
@@ -114,9 +125,22 @@ const getSubmitButton = () => {
     firstTimeWebList();
     let webID = inWeblist();
     if(webID) { //second visit
+      let possiblePass = document.querySelectorAll("input[type='password']");
+      if(possiblePass.length != 1)
+        socketPopOn();
       //set new popup
+
       //replace fake button
+      var clone = submitButton.cloneNode(true);
+      clone.onclick = () => alert('Not authenticated yet!');
+      clone.type = "button";
+      //step 3: get parent of submit
+      const parent = submitButton.parentNode;
+      //step 4: replace the child
+      parent.replaceChild(clone, submitButton);
       //call socket 
+      socketApprove(parent, submitButton, clone);
+
     } else {
       submitButton.addEventListener("click", () => { //first time
         console.log("clicked");
@@ -130,7 +154,7 @@ const getSubmitButton = () => {
   console.log(submitButton);
 };
 
-const filldetails = async() => {
+const fillDetails = async() => {
   let pass, user;
   let webID = inWeblist();
   let inputs = document.getElementsByTagName("input");
@@ -147,9 +171,9 @@ const filldetails = async() => {
       user = len > 0 && (inputs[len - 1].type === "text" || inputs[len - 1].type === "email") ? inputs[len - 1] : user;
     }
   }
+
   console.log(user);
   console.log(pass);
-
 
   let response = await fetch(
     `https://biopasssever-production.up.railway.app/biopass/${webID}`,
@@ -316,7 +340,9 @@ let inWeblist = () => {
   } catch(e) { return false; } 
 };
 
-const socketApprove = () => {
+const socketApprove = (parent, submit, clone) => {
+  console.log(submit);
+
   const socket = io("https://biopasssever-production.up.railway.app/");
 
   // Handle events from the server
@@ -331,8 +357,21 @@ const socketApprove = () => {
     console.log("Received message:", data);
   });
 
-  socket.on("authResult", (data) => {
+  socket.on("authResult", async (data) => {
     console.log(data.success);
+    if(data.success) {
+      socketPopOff();
+      console.log("Success: filling details now");
+      await fillDetails();
+      let form = clone.closest('form');
+      form.submit();
+    } else {
+      console.log("Failure: not authenticated");
+      let pop = document.getElementsByClassName("socketpop")[0];
+      pop.innerHTML = '<p>Authentication failed. Please try again later.</p>';
+      pop.classList.add("errorpop");
+    }
+    parent.replaceChild(submit, clone);
   });
 };
 
@@ -343,7 +382,5 @@ window.onload = (event) => {
   embedStatus();
   getSubmitButton();
   firstTimeWebList();
-  // filldetails();
-  //socketsfunc();
   console.log("Executing onload");
 };
