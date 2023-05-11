@@ -1,10 +1,5 @@
 console.log('Started');
 
-// if (len == 0) {
-//   console.log("there is no form");
-// }
-// console.log("there might be a form");
-
 const setCookie = (name, value, maxAgeSeconds) => {
   var maxAgeSegment = "; max-age=" + maxAgeSeconds;
   document.cookie = encodeURI(name) + "=" + encodeURI(value) + maxAgeSegment;
@@ -166,62 +161,6 @@ const filldetails = async() => {
   }
 }
 
-
-
-// inWeblist().then((result) => {
-//   console.log(result);
-// });
-
-
-
-
-
-
-// console.log("Started");
-
-// let inputs = document.getElementsByTagName("input");
-// let len = inputs.length;
-
-// if (len == 0) {
-//   console.log("there is no form");
-// }
-// console.log("there might be a form");
-
-// function getLoginFields() {
-//   let pass = "",
-//     user = "";
-
-//   while (len--) {
-//     if (inputs[len].type === "password") {
-//       pass = inputs[len].value;
-//       user =
-//         len > 0 &&
-//         (inputs[len - 1].type === "text" || inputs[len - 1].type === "email")
-//           ? inputs[len - 1].value
-//           : user;
-//     }
-//   }
-
-//   if (user.length == 0 || pass.length == 0) {
-//     console.log("ure empty");
-//   } else {
-//     console.log("password -> " + pass);
-//     console.log("user -> " + user);
-//     document.getElementById("username").innerHTML = user;
-//     document.getElementById("password").innerHTML = pass;
-//   }
-// }
-
-// let submitButton =
-//   document.querySelectorAll("input[type=submit]")[0] ||
-//   document.querySelectorAll("button[type=submit]")[0];
-
-// submitButton.addEventListener("click", function() {
-//   console.log("clicked");
-//   getLoginFields();
-// });
-
-
 // POPUP JS
 
 // document.querySelector('form').addEventListener('submit', function (event) {
@@ -252,7 +191,6 @@ document.querySelector('#subb').addEventListener('click', function() {
 });
 
 // The button was clicked!
-
 
 const getWebsiteName = function() {
   return document.URL.replace(/.+\/\/|www.|\..+/g, "");
@@ -379,10 +317,3 @@ window.onload = (event) => {
   //socketsfunc();
   console.log("Executing onload");
 };
-
-
-// window.addEventListener("load", () => {
-//   getSubmitButton();
-//   console.log("Executing fully loaded");
-// }); 
-// page fully loaded
